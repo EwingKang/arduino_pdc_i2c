@@ -26,9 +26,10 @@ SparkFun 9DoF Razor IMU M0
 Supported Platforms:
 - ATSAMD21 (Arduino Zero, SparkFun SAMD21 Breakouts)
 ******************************************************************************/
-#include "../include/pdc_mpu9250_dmp.h"
-#include "../include/MPU9250_RegisterMap.h"
-#include "../include/i2c_bus.hpp"
+
+#include <i2c_bus.hpp>
+#include <pdc_mpu9250_dmp.hpp>
+#include "utils/MPU9250_RegisterMap.h"
 
 extern "C" {
 #include "utils/inv_mpu.h"
@@ -56,7 +57,6 @@ inv_error_t MPU9250_DMP::begin(void)
 	inv_error_t result;
     struct int_param_s int_param;
 	
-	//Wire.begin(); //EWING TODO
 	i2c_bus.Begin();
 	
 	Serial.println("MPU init");
@@ -64,7 +64,7 @@ inv_error_t MPU9250_DMP::begin(void)
 	
 	if (result)
 		return result;
-	//accelerometer = i2c_bus.Add_Device(ADXL345);
+	
 	Serial.println("Set bypass");
 	mpu_set_bypass(1); // Place all slaves (including compass) on primary bus
 	
